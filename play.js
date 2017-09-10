@@ -27,13 +27,6 @@ function component(width, height, color, x, y) {
     }
 }
 
-// var myGamePiece = {
-//     running: false,
-//     startRunning: function () {
-//         runline = new component(7, 7, "yellow", myGamePiece.x, myGamePiece.y);
-//         running = true;
-//     }
-// }
 var keyPressed = {}
 
 var myGameArea = {
@@ -85,99 +78,10 @@ function updateGameArea() {
             gpLeft.speedX = 0;
             gpRight.speedX = 0;
         }
-    }else{
+    } else {
         gpLeft.x = 160;
         gpRight.x = 200;
     }
-    // if (myGameArea.keydown) {
-    //     if (myGameArea.keydown == 37) {
-    //         gpLeft.speedX = -4;
-    //         gpRight.speedX = -4;
-    //         if (gpLeft.x == 0) {
-    //             gpLeft.speedX = -0;
-    //             gpRight.speedX = -0;
-    //         }
-    //     }
-    //     if (myGameArea.keydown == 39) {
-    //         gpLeft.speedX = 4;
-    //         gpRight.speedX = 4;
-    //         if (gpLeft.x == 320) {
-    //             gpLeft.speedX = -0;
-    //             gpRight.speedX = -0;
-    //         }
-    //     }
-    //     if (myGameArea.keydown == 32) {
-    //         gpLeft.speedX = -4;
-    //         gpRight.speedX = 4;
-    //         if (gpLeft.x == 0) {
-    //             gpLeft.speedX = 0;
-    //             gpRight.speedX = 0;
-    //         }
-    //     }
-    // }
-    // if (myGameArea.keyup) {
-    //     if (myGameArea.keyup == 37) {
-    //         gpLeft.speedX = 0;
-    //         gpRight.speedX = 0;
-    //         myGameArea.keydown = false;
-    //         myGameArea.keyup = false; 
-    //         if (gpLeft.x != 160) {
-    //             gpLeft.speedX = 4;
-    //             gpRight.speedX = 4;
-    //             myGameArea.keyup = true;
-    //         }
-    //     }
-    //     if (myGameArea.keyup == 39) {
-    //         gpLeft.speedX = 0;
-    //         gpRight.speedX = 0;
-    //         myGameArea.keyup = false;
-    //         myGameArea.keydown = false;
-    //         if (gpLeft.x != 160) {
-    //             gpLeft.speedX = -4;
-    //             gpRight.speedX = -4;
-    //             myGameArea.keyup = true;
-    //         }
-    //     }
-    //     if (myGameArea.keyup == 32) {
-    //         gpLeft.speedX = 0;
-    //         gpRight.speedX = 0;
-    //         myGameArea.keydown = false;
-    //         myGameArea.keyup = false;
-    //         if (gpLeft.x != 160) {
-    //             gpLeft.speedX = 4;
-    //             gpRight.speedX = -4;
-    //             myGameArea.keyup = true;
-    //         }
-    //     }
-    // }
-    // if (gpLeft.x >= 0 && gpRight.x >= gpLeft.x + 35 && gpRight.x <= 505 && gpLeft.x <= gpRight.x - 35) {
-    //     if (myGameArea.keydown && myGameArea.keydown == 37) {
-    //         gpLeft.speedX = -4;
-    //         gpRight.speedX = -4;
-    //     }
-    //     if (myGameArea.keydown && myGameArea.keydown == 39) {
-    //         gpLeft.speedX = 4;
-    //         gpRight.speedX = 4;
-    //     }
-    //     if (myGameArea.keydown && myGameArea.keydown == 32) {
-    //         gpLeft.speedX = -4;
-    //         gpRight.speedX = 4;
-    //     }
-    //     if (myGameArea.keyup && myGameArea.keyup == 37) {
-    //         gpLeft.speedX = 4;
-    //         gpRight.speedX = 4;
-    //     }
-    //     if (myGameArea.keyup && myGameArea.keyup == 39) {
-    //         gpLeft.speedX = -4;
-    //         gpRight.speedX = -4;
-    //     }
-    //     if (myGameArea.keyup && myGameArea.keyup == 32) {
-    //         gpLeft.speedX = 4;
-    //         gpRight.speedX = -4;
-    //     }
-    // }
-
-
 
     gpLeft.newPos();
     gpLeft.update();
