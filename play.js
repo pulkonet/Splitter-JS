@@ -1,16 +1,9 @@
-var innerObstacle = [];
-var outerObstacle = [];
-var runline;
+
 
 function startGame() {
     myGameArea.start();
-    myGameStack = new component(900, 480, "gray", 30, 30);
-    myGamePiece = new component(7, 7, "red", 480, 510);
-    level = 1;
-    x = Math.random() * 893 + 30;
-    y = Math.random() * 473 + 30;
-    innerObstacle.push(new component(7, 7, "green", x, y));
-    // levelChange = true;
+    gpRight = new component(40, 65, "red", 200, 650);
+    gpLeft = new component(40, 65, "blue", 160, 650);
 }
 
 function component(width, height, color, x, y) {
@@ -41,20 +34,21 @@ function component(width, height, color, x, y) {
 //         running = true;
 //     }
 // }
+var keyPressed = {}
 
 var myGameArea = {
     canvas: document.createElement("canvas"),
     start: function () {
-        this.canvas.width = 960;
-        this.canvas.height = 540;
+        this.canvas.width = 400;
+        this.canvas.height = 800;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 10);
         window.addEventListener('keydown', function (e) {
-            myGameArea.key = e.keyCode;
+            keyPressed[e.keyCode] = true;
         })
         window.addEventListener('keyup', function (e) {
-            myGameArea.key = false;
+            keyPressed[e.keyCode] = false;
         })
     },
 
@@ -64,59 +58,129 @@ var myGameArea = {
 }
 
 function updateGameArea() {
-
-    if (level == 1) {
-        for (i = 0; i < innerObstacle.length; i += 1) {
-            // innerObstacle[i].x += -1;
-            innerObstacle[i].speedX = Math.random() < 0.5 ? -1 : 1;
-            innerObstacle[i].speedY = Math.random() < 0.5 ? -1 : 1;
-        }
-        level += 1;
-    }
     myGameArea.clear();
-    if (level < 14) {
-        // myGamePiece.x = 480;
-        // myGamePiece.y = 510;
-        myGamePiece.speedX = 0;
-        myGamePiece.speedY = 0;
+    gpLeft.speedX = 0;
+    gpRight.speedX = 0;
+    if (keyPressed["39"] && keyPressed["37"]) {
+        gpLeft.speedX = -4;
+        gpRight.speedX = 4;
+        if (gpLeft.x == 0) {
+            gpLeft.speedX = 0;
+        }
+        if (gpRight.x == 360) {
+            gpRight.speedX = 0;
+        }
+    }
+    else if (keyPressed["39"]) {
+        gpLeft.speedX = 4;
+        gpRight.speedX = 4;
+        if (gpRight.x == 360 || gpLeft.x == 0) {
+            gpLeft.speedX = 0;
+            gpRight.speedX = 0;
+        }
+    } else if (keyPressed["37"]) {
+        gpLeft.speedX = -4;
+        gpRight.speedX = -4;
+        if (gpLeft.x == 0 || gpRight.x == 360) {
+            gpLeft.speedX = 0;
+            gpRight.speedX = 0;
+        }
+    }else{
+        gpLeft.x = 160;
+        gpRight.x = 200;
+    }
+    // if (myGameArea.keydown) {
+    //     if (myGameArea.keydown == 37) {
+    //         gpLeft.speedX = -4;
+    //         gpRight.speedX = -4;
+    //         if (gpLeft.x == 0) {
+    //             gpLeft.speedX = -0;
+    //             gpRight.speedX = -0;
+    //         }
+    //     }
+    //     if (myGameArea.keydown == 39) {
+    //         gpLeft.speedX = 4;
+    //         gpRight.speedX = 4;
+    //         if (gpLeft.x == 320) {
+    //             gpLeft.speedX = -0;
+    //             gpRight.speedX = -0;
+    //         }
+    //     }
+    //     if (myGameArea.keydown == 32) {
+    //         gpLeft.speedX = -4;
+    //         gpRight.speedX = 4;
+    //         if (gpLeft.x == 0) {
+    //             gpLeft.speedX = 0;
+    //             gpRight.speedX = 0;
+    //         }
+    //     }
+    // }
+    // if (myGameArea.keyup) {
+    //     if (myGameArea.keyup == 37) {
+    //         gpLeft.speedX = 0;
+    //         gpRight.speedX = 0;
+    //         myGameArea.keydown = false;
+    //         myGameArea.keyup = false; 
+    //         if (gpLeft.x != 160) {
+    //             gpLeft.speedX = 4;
+    //             gpRight.speedX = 4;
+    //             myGameArea.keyup = true;
+    //         }
+    //     }
+    //     if (myGameArea.keyup == 39) {
+    //         gpLeft.speedX = 0;
+    //         gpRight.speedX = 0;
+    //         myGameArea.keyup = false;
+    //         myGameArea.keydown = false;
+    //         if (gpLeft.x != 160) {
+    //             gpLeft.speedX = -4;
+    //             gpRight.speedX = -4;
+    //             myGameArea.keyup = true;
+    //         }
+    //     }
+    //     if (myGameArea.keyup == 32) {
+    //         gpLeft.speedX = 0;
+    //         gpRight.speedX = 0;
+    //         myGameArea.keydown = false;
+    //         myGameArea.keyup = false;
+    //         if (gpLeft.x != 160) {
+    //             gpLeft.speedX = 4;
+    //             gpRight.speedX = -4;
+    //             myGameArea.keyup = true;
+    //         }
+    //     }
+    // }
+    // if (gpLeft.x >= 0 && gpRight.x >= gpLeft.x + 35 && gpRight.x <= 505 && gpLeft.x <= gpRight.x - 35) {
+    //     if (myGameArea.keydown && myGameArea.keydown == 37) {
+    //         gpLeft.speedX = -4;
+    //         gpRight.speedX = -4;
+    //     }
+    //     if (myGameArea.keydown && myGameArea.keydown == 39) {
+    //         gpLeft.speedX = 4;
+    //         gpRight.speedX = 4;
+    //     }
+    //     if (myGameArea.keydown && myGameArea.keydown == 32) {
+    //         gpLeft.speedX = -4;
+    //         gpRight.speedX = 4;
+    //     }
+    //     if (myGameArea.keyup && myGameArea.keyup == 37) {
+    //         gpLeft.speedX = 4;
+    //         gpRight.speedX = 4;
+    //     }
+    //     if (myGameArea.keyup && myGameArea.keyup == 39) {
+    //         gpLeft.speedX = -4;
+    //         gpRight.speedX = -4;
+    //     }
+    //     if (myGameArea.keyup && myGameArea.keyup == 32) {
+    //         gpLeft.speedX = 4;
+    //         gpRight.speedX = -4;
+    //     }
+    // }
 
-        if (myGameArea.key && myGameArea.key == 37) { myGamePiece.speedX = -2; }
-        if (myGameArea.key && myGameArea.key == 39) { myGamePiece.speedX = 2; }
-        if (myGameArea.key && myGameArea.key == 38) { myGamePiece.speedY = -2; }
-        if (myGameArea.key && myGameArea.key == 40) { myGamePiece.speedY = 2; }
-        if (myGamePiece.x >= 953 && myGamePiece.speedX > 0) {
-            myGamePiece.speedX = 0;
-        }
-        if (myGamePiece.y >= 533 && myGamePiece.speedY > 0) {
-            myGamePiece.speedY = 0;
-        }
-        if (myGamePiece.x <= 0 && myGamePiece.speedX < 0) {
-            myGamePiece.speedX = 0;
-        }
-        if (myGamePiece.y <= 0 && myGamePiece.speedY < 0) {
-            myGamePiece.speedY = 0;
-        }
-    }
-    // if (myGamePiece.speedX != 0) {
-    //     runline.x += myGamePiece.speedX;
-    //     runline.y = 7;
-    // }
-    // if (myGamePiece.speedY != 0) {
-    //     runline.y += myGamePiece.speedY;
-    //     runline.x = 7;
-    // }
-    myGameStack.update();
-    for (i = 0; i < innerObstacle.length; i += 1) {
-        if (innerObstacle[i].x < 30 || innerObstacle[i].x > 923) {
-            innerObstacle[i].speedX *= -1;
-        }
-        if (innerObstacle[i].y < 30 || innerObstacle[i].y > 503) {
-            innerObstacle[i].speedY *= -1;
-        }
-        innerObstacle[i].newPos();
-        innerObstacle[i].update();
-    }
-    // runline.update();
-    myGamePiece.newPos();
-    myGamePiece.update();
+
+
+    gpLeft.newPos();
+    gpLeft.update();
+    gpRight.newPos();
+    gpRight.update();
 }
