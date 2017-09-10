@@ -1,5 +1,6 @@
 var innerObstacle = [];
 var outerObstacle = [];
+var runline;
 
 function startGame() {
     myGameArea.start();
@@ -32,6 +33,14 @@ function component(width, height, color, x, y) {
         this.y += this.speedY;
     }
 }
+
+// var myGamePiece = {
+//     running: false,
+//     startRunning: function () {
+//         runline = new component(7, 7, "yellow", myGamePiece.x, myGamePiece.y);
+//         running = true;
+//     }
+// }
 
 var myGameArea = {
     canvas: document.createElement("canvas"),
@@ -88,17 +97,26 @@ function updateGameArea() {
             myGamePiece.speedY = 0;
         }
     }
+    // if (myGamePiece.speedX != 0) {
+    //     runline.x += myGamePiece.speedX;
+    //     runline.y = 7;
+    // }
+    // if (myGamePiece.speedY != 0) {
+    //     runline.y += myGamePiece.speedY;
+    //     runline.x = 7;
+    // }
     myGameStack.update();
     for (i = 0; i < innerObstacle.length; i += 1) {
-        if(innerObstacle[i].x < 30 || innerObstacle[i].x > 923){
+        if (innerObstacle[i].x < 30 || innerObstacle[i].x > 923) {
             innerObstacle[i].speedX *= -1;
         }
-        if(innerObstacle[i].y < 30 || innerObstacle[i].y > 503){
+        if (innerObstacle[i].y < 30 || innerObstacle[i].y > 503) {
             innerObstacle[i].speedY *= -1;
         }
         innerObstacle[i].newPos();
         innerObstacle[i].update();
     }
+    // runline.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
