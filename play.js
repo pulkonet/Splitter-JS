@@ -1,12 +1,15 @@
 var myObstacles = [];
+var myScore;
 
 function startGame() {
     myGameArea.start();
     gpRight = new component(40, 65, "red", 200, 650);
     gpLeft = new component(40, 65, "blue", 160, 650);
+    myScore = new component("30px", "Consolas", "green", 10, 780, "text");
 }
 
-function component(width, height, color, x, y) {
+function component(width, height, color, x, y, type) {
+    this.type = type;
     this.width = width;
     this.height = height;
     this.speedX = 0;
@@ -17,9 +20,14 @@ function component(width, height, color, x, y) {
     ctx.fillStyle = color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
     this.update = function () {
-        ctx = myGameArea.context;
-        ctx.fillStyle = color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        if (this.type == "text") {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
+        } else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
     }
     this.newPos = function () {
         this.x += this.speedX;
@@ -55,7 +63,7 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
-        this.acc = 0;
+        this.acc = setInterval(checkScore, 2500);
         this.interval = setInterval(updateGameArea, 10);
         window.addEventListener('keydown', function (e) {
             keyPressed[e.keyCode] = true;
@@ -79,6 +87,15 @@ function everyinterval(n) {
 }
 
 var a = 1;
+var count = 0;
+function checkScore(){
+    for (i = 0; i < myObstacles.length; i += 1) {
+        if(myObstacles[i].y > 715){
+            count = i;
+        }
+    }
+    return count;
+}
 
 function updateGameArea() {
     var x, y;
@@ -92,12 +109,12 @@ function updateGameArea() {
 
     myGameArea.frameNo += 1;
     if (myGameArea.frameNo == 1 || everyinterval(250)) {
-        if(Math.random() > 0.5){
+        if (Math.random() > 0.5) {
             x = 75;
             y = -65;
             myObstacles.push(new component(250, 65, "yellow", x, y));
         }
-        else{
+        else {
             x = Math.random() > 0.5 ? 0 : 150;
             y = -65;
             myObstacles.push(new component(250, 65, "yellow", x, y));
@@ -139,6 +156,8 @@ function updateGameArea() {
         gpLeft.x = 160;
         gpRight.x = 200;
     }
+    myScore.text = "SCORE: " + count;
+    myScore.update();
     gpLeft.newPos();
     gpLeft.update();
     gpRight.newPos();
