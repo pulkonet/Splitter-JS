@@ -55,7 +55,7 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
-        this.acc = -1;
+        this.acc = 0;
         this.interval = setInterval(updateGameArea, 10);
         window.addEventListener('keydown', function (e) {
             keyPressed[e.keyCode] = true;
@@ -74,9 +74,11 @@ var myGameArea = {
 }
 
 function everyinterval(n) {
-    if ((myGameArea.frameNo / n) % 1 == 0) { return true; }
+    if ((Math.floor(myGameArea.frameNo) / n) % 1 == 0) { return true; }
     return false;
 }
+
+var a = 1;
 
 function updateGameArea() {
     var x, y;
@@ -87,15 +89,24 @@ function updateGameArea() {
         }
     }
     myGameArea.clear();
-    myGameArea.acc += 1;
-    myGameArea.frameNo += 1;    
-    if (myGameArea.frameNo == 1 || everyinterval(150)) {
-        x = 150;
-        y = -65;
-        myObstacles.push(new component(100, 65, "yellow", x, y));
+
+    myGameArea.frameNo += 1;
+    if (myGameArea.frameNo == 1 || everyinterval(250)) {
+        if(Math.random() > 0.5){
+            x = 75;
+            y = -65;
+            myObstacles.push(new component(250, 65, "yellow", x, y));
+        }
+        else{
+            x = Math.random() > 0.5 ? 0 : 150;
+            y = -65;
+            myObstacles.push(new component(250, 65, "yellow", x, y));
+        }
     }
     for (i = 0; i < myObstacles.length; i += 1) {
-        myObstacles[i].y += 1;
+        a = a + 0.0001;
+        myObstacles[i].speedY = a;
+        myObstacles[i].newPos();
         myObstacles[i].update();
     }
     gpLeft.speedX = 0;
