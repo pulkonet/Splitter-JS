@@ -63,7 +63,7 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
-        this.acc = setInterval(checkScore, 2500);
+        this.acc = setInterval(checkScore, 10);
         this.interval = setInterval(updateGameArea, 10);
         window.addEventListener('keydown', function (e) {
             keyPressed[e.keyCode] = true;
@@ -91,7 +91,7 @@ var count = 0;
 function checkScore(){
     for (i = 0; i < myObstacles.length; i += 1) {
         if(myObstacles[i].y > 715){
-            count = i;
+            count = i+1;
         }
     }
     return count;
