@@ -63,6 +63,8 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
+        this.a = 1;
+        this.count = 0;
         this.acc = setInterval(checkScore, 10);
         this.interval = setInterval(updateGameArea, 10);
         window.addEventListener('keydown', function (e) {
@@ -86,15 +88,14 @@ function everyinterval(n) {
     return false;
 }
 
-var a = 1;
-var count = 0;
+
 function checkScore(){
     for (i = 0; i < myObstacles.length; i += 1) {
         if(myObstacles[i].y > 715){
-            count = i+1;
+            myGameArea.count = i+1;
         }
     }
-    return count;
+    return myGameArea.count;
 }
 
 function updateGameArea() {
@@ -105,7 +106,7 @@ function updateGameArea() {
             return;
         }
     }
-    myGameArea.clear();
+    myGameArea.clear();    
 
     myGameArea.frameNo += 1;
     if (myGameArea.frameNo == 1 || everyinterval(250)) {
@@ -121,8 +122,8 @@ function updateGameArea() {
         }
     }
     for (i = 0; i < myObstacles.length; i += 1) {
-        a = a + 0.0001;
-        myObstacles[i].speedY = a;
+        myGameArea.a += 0.0001;
+        myObstacles[i].speedY = myGameArea.a;
         myObstacles[i].newPos();
         myObstacles[i].update();
     }
@@ -156,7 +157,7 @@ function updateGameArea() {
         gpLeft.x = 160;
         gpRight.x = 200;
     }
-    myScore.text = "SCORE: " + count;
+    myScore.text = "SCORE: "+ checkScore();
     myScore.update();
     gpLeft.newPos();
     gpLeft.update();
