@@ -4,7 +4,13 @@
 
 ## Controls
 **Move left**: <-
+
 **Move right**: ->
+
 **Split**: <- + ->
 
 *Refresh to restart*
+
+## Inspiration
+
+* [Splitter for Android](https://play.google.com/store/apps/details?id=com.mdg.splitter) by SDS Mobile Development Group 
